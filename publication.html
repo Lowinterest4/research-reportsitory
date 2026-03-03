@@ -316,6 +316,7 @@ button.active-filter:focus {
 }
     </style>
 </head>
+<body>
 <header>
     <div class="header-container">
         <img src="ursm logo.png" alt="URS Logo" class="myImage">
@@ -329,7 +330,6 @@ button.active-filter:focus {
         </nav>
     </div>
 </header>
-<body>
 <main>
    
 		
@@ -513,35 +513,33 @@ clearBtn.addEventListener("click", () => {
 		  t.nextElementSibling.style.display === "block" ? "none" : "block";
 	  });
 
-	  // PDF download
-	btn.onclick = async () => {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: "mm", format: "a4" });
-  const r = rows[i];
+	// PDF download
+// PDF download
+document.querySelectorAll(".download-pdf").forEach((btn, i) => {
+  btn.addEventListener("click", async () => {
 
-  const pageWidth = 180;
-  const headerHeight = 30; // adjust if needed
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+    const r = rows[i];
 
-  // --- LOAD HEADER IMAGE ---
-  const img = new Image();
-  img.src = "headerpdf.png";
+    const pageWidth = 180;
+    const headerHeight = 30;
 
-  await new Promise(resolve => {
-    img.onload = resolve;
-  });
+    const img = new Image();
+    img.src = "headerpdf.png";
 
-  // Add header image
-  doc.addImage(img, "PNG", 0, 0, 210, headerHeight);
+    await new Promise(resolve => img.onload = resolve);
 
-  // Starting Y position AFTER header
-  let y = headerHeight + 10;
+    doc.addImage(img, "PNG", 0, 0, 210, headerHeight);
 
-  // ---------- TITLE ----------
-  doc.setFontSize(18);
-  doc.setFont("helvetica", "bold");
-  const titleLines = doc.splitTextToSize(r.title || "", pageWidth);
-  doc.text(titleLines, 15, y);
-  y += titleLines.length * 7 + 5;
+    let y = headerHeight + 10;
+
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+
+    const titleLines = doc.splitTextToSize(r.title || "", pageWidth);
+    doc.text(titleLines, 15, y);
+    y += titleLines.length * 7 + 5;
 
   doc.setFontSize(12);
 
@@ -807,7 +805,6 @@ function renderSDGs(data) {
 	});
 	</script>
 </html>
-
 
 
 
