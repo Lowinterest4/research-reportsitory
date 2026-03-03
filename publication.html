@@ -286,7 +286,7 @@ button.active-filter,
 button.active-filter:hover,
 button.active-filter:focus {
     background-color: #1e3a8a;
-    color: #FF8C00;
+    color:  #FFEF5F;
     font-weight: 600;
 }
 
@@ -583,18 +583,51 @@ if (r.sdg?.length) {
 		}
 
 		// Executive Summary
-		if(r.abstract){
+		if (r.abstract) {
 		  doc.setFontSize(14);
 		  doc.setFont("helvetica", "bold");
 		  doc.text("EXECUTIVE SUMMARY", 15, y);
-		  y += 7;
+		  y += 10;
 
 		  doc.setFontSize(12);
 		  doc.setFont("helvetica", "normal");
-		  const abstractLines = doc.splitTextToSize(r.abstract, pageWidth);
-		  doc.text(abstractLines, 15, y);
-		}
 
+		  const lines = doc.splitTextToSize(r.abstract, pageWidth);
+
+		  lines.forEach((line, index) => {
+
+			// Add new page if needed
+			if (y > 280) {
+			  doc.addPage();
+			  y = 15;
+			}
+
+			const words = line.split(" ");
+
+			// Do NOT justify last line of paragraph
+			if (index === lines.length - 1 || words.length === 1) {
+			  doc.text(line, 15, y);
+			} else {
+			  let lineWidth = doc.getTextWidth(line);
+			  let spaceWidth = doc.getTextWidth(" ");
+			  let totalSpace = pageWidth - lineWidth;
+
+			  let gapCount = words.length - 1;
+			  let extraSpace = totalSpace / gapCount;
+
+			  let x = 15;
+
+			  words.forEach((word, i) => {
+				doc.text(word, x, y);
+				if (i < gapCount) {
+				  x += doc.getTextWidth(word) + spaceWidth + extraSpace;
+				}
+			  });
+			}
+
+			y += 7;
+		  });
+		}
 		doc.save(`${r.title || "research"}.pdf`);
 	  };
 	});
