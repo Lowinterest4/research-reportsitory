@@ -433,10 +433,10 @@ clearBtn.addEventListener("click", () => {
   !filters.year || getYear(r.research_date) == filters.year;
 
 		 const matchSDG =
-      !filters.sdg ||
-      toArray(r.sdg).some(s =>
-        s.toLowerCase().includes(filters.sdg.toLowerCase())
-      );
+  !filters.sdg ||
+  toArray(r.sdg).some(s =>
+    s.trim().toLowerCase() === filters.sdg.toLowerCase()
+  );
 
 		const matchKeyword =
 	  !filters.keyword || (r.keywords||[]).some(k => k.toLowerCase().includes(filters.keyword.toLowerCase()));
@@ -491,9 +491,6 @@ clearBtn.addEventListener("click", () => {
 
 		<div><strong>Course:</strong></div>
 		<div>${toArray(r.course).join("<br>") || "—"}</div>
-
-		<div><strong>Category:</strong></div>
-		<div>${r.category || "—"}</div>
 
 		<div><strong>SDG:</strong></div>
 		<div>${toArray(r.sdg).join(", ") || "—"}</div>
@@ -559,16 +556,6 @@ if (r.advisers?.length) {
 		  doc.text(courseLines, 15, y);
 		  y += courseLines.length * 7;
 		}
-
-		// Category
-		if (r.category) {
-  const categoryLines = doc.splitTextToSize(
-    `Category: ${r.category}`,
-    pageWidth
-  );
-  doc.text(categoryLines, 15, y);
-  y += categoryLines.length * 7;
-}
 
 if (r.sdg?.length) {
   const sdgLines = doc.splitTextToSize(
@@ -658,7 +645,8 @@ function renderSDGs(data) {
 
   data.forEach(d => {
     toArray(d.sdg).forEach(s => {
-      sdgMap[s] = (sdgMap[s] || 0) + 1;
+      const normalized = s.trim().toUpperCase();
+      sdgMap[normalized] = (sdgMap[normalized] || 0) + 1;
     });
   });
 
@@ -666,7 +654,12 @@ function renderSDGs(data) {
   container.innerHTML = "";
 
   Object.entries(sdgMap)
-    .sort((a, b) => b[1] - a[1]) // most used first
+    .sort((a, b) => {
+      // Sort numerically by SDG number
+      const numA = parseInt(a[0].match(/\d+/));
+      const numB = parseInt(b[0].match(/\d+/));
+      return numA - numB;
+    })
     .forEach(([sdg]) => {
       const btn = document.createElement("button");
       btn.textContent = sdg;
@@ -727,5 +720,4 @@ function renderSDGs(data) {
 	});
 	</script>
 </html>
-
 
