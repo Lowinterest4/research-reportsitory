@@ -713,7 +713,7 @@ function renderSDGs(data) {
 
   data.forEach(d => {
     toArray(d.sdg).forEach(s => {
-      const normalized = s.trim().toUpperCase();
+      const normalized = s.trim();
       sdgMap[normalized] = (sdgMap[normalized] || 0) + 1;
     });
   });
@@ -721,18 +721,19 @@ function renderSDGs(data) {
   const container = document.getElementById("sdg-buttons");
   container.innerHTML = "";
 
-  Object.entries(sdgMap)
+  Object.keys(sdgMap)
     .sort((a, b) => {
-      // Sort numerically by SDG number
-      const numA = parseInt(a[0].match(/\d+/));
-      const numB = parseInt(b[0].match(/\d+/));
-      return numA - numB;
+      const numA = parseInt(a.match(/\d+/)?.[0]) || 0;
+      const numB = parseInt(b.match(/\d+/)?.[0]) || 0;
+      return numA - numB; // ensures 1 → 17 order
     })
-    .forEach(([sdg]) => {
+    .forEach((sdg) => {
+
       const btn = document.createElement("button");
       btn.textContent = sdg;
 
       btn.addEventListener("click", () => {
+
         filters.sdg = filters.sdg === sdg ? null : sdg;
 
         document.querySelectorAll("#sdg-buttons button")
@@ -748,7 +749,6 @@ function renderSDGs(data) {
       container.appendChild(btn);
     });
 }
-
 
 	function renderKeywords(data){
 	  const m = {};
@@ -788,7 +788,6 @@ function renderSDGs(data) {
 	});
 	</script>
 </html>
-
 
 
 
