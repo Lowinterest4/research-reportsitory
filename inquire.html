@@ -231,19 +231,6 @@
       color: #fbbf24;
       font-weight: bold;
     }
-/* Dropdown Container */
-.dropdown-parent {
-  position: relative;
-}
-
-.dropdown-toggle {
-  color: #fff;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  padding-bottom: 0.3rem;
-  display: inline-block;
-}
 
 
    @media (max-width: 900px) {
@@ -259,6 +246,53 @@
       .hero-section h1 { font-size: 2rem; }
       .hero-section p { font-size: 1rem; }
     }
+	/* DROPDOWN MENU */
+.dropdown{
+  position:relative;
+}
+
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  background:white;
+  min-width:200px;
+  list-style:none;
+  padding:8px 0;
+  border-radius:6px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.15);
+  z-index:1000;
+}
+
+.dropdown-menu li{
+  width:100%;
+}
+
+.dropdown-menu a{
+  display:block;
+  padding:10px 16px;
+  color:#1e3a8a;
+  text-decoration:none;
+  font-size:0.95rem;
+}
+
+.dropdown-menu a:hover{
+  background:#f3f4f6;
+  color:#fbbf24;
+}
+
+/* show dropdown on hover (desktop) */
+.dropdown:hover .dropdown-menu{
+  display:block;
+}
+
+/* remove underline animation inside dropdown */
+.dropdown-menu a::after{
+  display:none;
+}
+
+
   </style>
 </head>
 
@@ -267,18 +301,28 @@
   <!-- HEADER (unchanged) -->
  <header>
     <div class="header-container">
-      <img src="ursm logo.png" alt="URS Logo" class="myImage">
+        <img src="ursm logo.png" alt="URS Logo" class="myImage">
+        <nav>
+           <ul class="nav-menu" id="nav-menu">
+    <li><a href="index.html">Home</a></li>
 
-      <nav>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="index.html">Home</a></li>
-				<li><a href="about.html">About</a></li>
-                <li><a href="publication.html">Collection</a></li>
-                <li><a href="inquire.html">Contact</a></li>
-            </ul>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle">About</a>
+      <ul class="dropdown-menu">
+        <li><a href="abouturs.html">About URS</a></li>
+        <li><a href="aboutlibrary.html">About Library</a></li>
+        <li><a href="aboutresearchers.html">About Researchers</a></li>
+      </ul>
+    </li>
+
+    <li><a href="publication.html">Collection</a></li>
+    <li><a href="inquire.html">Contact</a></li>
+</ul>
         </nav>
     </div>
-  </header>
+</header>
+
+
 
   <!-- HERO -->
   <section class="hero-section">
@@ -343,19 +387,23 @@
 	
 // Dropdown toggle for click
 document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.querySelector(".dropdown-toggle");
-  const dropdown = document.querySelector(".dropdown");
+  const dropdownToggle = document.querySelector(".dropdown-toggle");
+const dropdownMenu = document.querySelector(".dropdown-menu");
 
-  toggle.addEventListener("click", (e) => {
-    e.stopPropagation();
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-  });
+if(dropdownToggle){
+  dropdownToggle.addEventListener("click", function(e){
 
-  // Close dropdown if clicking outside
-  document.addEventListener("click", () => {
-    dropdown.style.display = "none";
+    if(window.innerWidth <= 900){
+      e.preventDefault();
+
+      dropdownMenu.style.display =
+        dropdownMenu.style.display === "block"
+        ? "none"
+        : "block";
+    }
+
   });
-});
+}
     emailjs.init("m5SJXzeZZLdZCC2ss"); // Your Public Key
 
     document.getElementById("contactForm").addEventListener("submit", function(e) {
