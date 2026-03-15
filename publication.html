@@ -206,6 +206,17 @@
             background: var(--accent-yellow);
             color: var(--primary-blue);
         }
+/* Thin separator between sidebar filter sections */
+#sidebar details {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e6e6e6; /* faint thin line */
+}
+
+/* Remove line from the last filter */
+#sidebar details:last-of-type {
+    border-bottom: none;
+}
 
         /* --- Sidebar --- */
         #sidebar {
@@ -242,7 +253,7 @@
             display: inline-block;
         }
 
-        #year-buttons, #keyword-buttons {
+        #year-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
@@ -263,17 +274,37 @@
             background: var(--secondary-blue);
             color: white;
         }
-#year-buttons,
-#keyword-buttons,
-#sdg-buttons {
-  display: flex;
-  flex-direction: column; /* stack vertically */
-  align-items: flex-start; 
-  gap: 8px; /* 👈 adds space between buttons */
+/* CLEAR FILTER BUTTON */
+button.clearbtn{
+    background:#ffffff;   /* your color */
+    color:#1e3a8a;
+    width:100%;
+    padding:10px 14px;
+    border-radius:6px;
+    font-size:0.9rem;
+    font-weight:600;
+    border:2px solid #ffcc00;
+    transition:all 0.25s ease;
 }
 
-/* SDG Buttons */
-#sdg-buttons button {
+/* HOVER */
+button.clearbtn:hover{
+    background:#1e3a8a;
+    color:#ffcc00;
+    border-color:#1e3a8a;
+}
+
+#year-buttons,
+#sdg-buttons,
+#keyword-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* SDG and Keyword buttons identical style */
+#sdg-buttons button,
+#keyword-buttons button {
     width: 100%;
     text-align: left;
     padding: 8px 12px;
@@ -290,6 +321,49 @@ button.active-filter:focus {
     font-weight: 600;
 }
 
+/* Hide filter button on desktop */
+.filter-btn{
+  display:none;
+}
+.filter-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.close-filter{
+  display:none;
+}
+@media (max-width:900px){
+
+  /* show filter button only on mobile */
+  .filter-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+.filter-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:0px;
+}
+
+.filter-header h3{
+  margin:0;
+}
+
+.close-filter{
+  background:none;
+  border:none;
+  font-size:22px;
+  cursor:pointer;
+  color:#1e3a8a;
+  margin-bottom:10px;
+}
+
+}
 
 
         /* --- Responsive --- */
@@ -314,6 +388,154 @@ button.active-filter:focus {
 #sidebar {
     overflow-y: auto;
 }
+.mobile-search{
+  display:flex;
+  gap:10px;
+  margin-bottom:1rem;
+}
+
+.mobile-search input{
+  flex:1;
+}
+
+/* filter button */
+.filter-btn{
+  background:#1e3a8a;
+  color:white;
+  border:none;
+  border-radius:50%;
+  width:45px;
+  height:45px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* default desktop filter */
+#filter-panel{
+  display:block;
+}
+
+/* MOBILE */
+@media (max-width:900px){
+
+  #filter-panel{
+    position:fixed;
+    top:0;
+    right:-320px;
+    width:300px;
+    height:100vh;
+    background:white;
+    box-shadow:-4px 0 15px rgba(0,0,0,0.2);
+    padding:20px;
+    overflow-y:auto;
+    transition: right 0.3s ease;
+    z-index:2000;
+  }
+
+  #filter-panel.active{
+    right:0;
+  }
+
+  #sidebar{
+    position:relative;
+    box-shadow:none;
+    padding:0;
+  }
+
+}
+@media (max-width:900px){
+
+  .close-filter{
+    display:block;
+  }
+
+}
+@media (max-width:900px){
+
+  main{
+    margin: 0 auto;   /* remove the 2rem gap */
+  }
+
+}
+@media (max-width:900px){
+
+  .mobile-search{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+    padding:12px;
+    background:white;
+    border-radius:10px;
+    border:1px solid #e5e7eb;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  .mobile-search input{
+    flex:1;
+    padding:10px;
+    border:1px solid #e5e7eb;
+    border-radius:6px;
+  }
+
+}
+/* MOBILE SEARCH UNDER HEADER */
+.mobile-search-wrapper{
+  display:none;
+}
+
+@media (max-width:900px){
+
+  .mobile-search-wrapper{
+    display:block;
+    position: sticky;
+    top: 120px; /* height of your header */
+    z-index: 999;
+    background:#f8f9fa;
+    padding:15px 5%;
+  }
+
+}
+
+@media (max-width:900px){
+
+  .mobile-search-wrapper{
+    display:block;
+    background:#f8f9fa;
+    padding:15px 5%;
+  }
+
+  .mobile-search{
+    display:flex;
+    gap:12px;
+    background:#f8f9fa;
+    padding:18px;
+    border-radius:12px;
+  }
+
+  .mobile-search input{
+    flex:1;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #d1d5db;
+    font-size:15px;
+  }
+
+  .filter-btn{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    border:none;
+    background:#253eb;
+    color:white;
+    font-size:18px;
+  }
+
+}
+@media (max-width:900px){
+  #sidebar .mobile-search{
+    display:none;
+  }
+}
     </style>
 </head>
 <header>
@@ -329,6 +551,13 @@ button.active-filter:focus {
         </nav>
     </div>
 </header>
+<!-- MOBILE SEARCH (only visible on mobile) -->
+<div class="mobile-search-wrapper">
+  <div class="mobile-search">
+    <input type="text" id="search-mobile" placeholder="Search by title, author, keyword...">
+    <button id="open-filter" class="filter-btn">☰</button>
+  </div>
+</div>
 <body>
 <main>
    
@@ -339,18 +568,42 @@ button.active-filter:focus {
   </div>
 
   <div id="sidebar">
+
+  <div class="mobile-search">
     <input type="text" id="search" placeholder="Search by title, author, keyword...">
-	<h3>Filter by Year</h3>
-    <div id="year-buttons"></div>
-	<h3>Filter by SDG</h3>
-	<div id="sdg-buttons"></div>
-	<br>
-    <details>
+
+    <button id="open-filter" class="filter-btn">
+      ☰
+    </button>
+  </div>
+
+  <div id="filter-panel">
+
+  <div class="filter-header">
+    <h3>Filter by Year</h3>
+    <button id="close-filter" class="close-filter">✕</button>
+  </div>
+
+  <div id="year-buttons"></div>
+
+  <details>
+    <summary><h3>Filter by SDG</h3></summary>
+    <div id="sdg-buttons"></div>
+  </details>
+
+  <details>
     <summary><h3>Top Keywords</h3></summary>
     <div id="keyword-buttons"></div>
-    </details>
-    <button id="clear-filters" class="clearbtn">Clear Filters</button>
-  </div>
+  </details>
+
+  <br><br>
+
+  <button id="clear-filters" class="clearbtn">Clear Filters</button>
+
+</div>
+
+</div>
+
 </main>
 </body>
  <!-- FOOTER (unchanged) -->
@@ -363,16 +616,43 @@ button.active-filter:focus {
 	const SUPABASE_URL = "https://emakckalouwopodqehgn.supabase.co";
 	const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtYWtja2Fsb3V3b3BvZHFlaGduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1NzA3OTYsImV4cCI6MjA4MTE0Njc5Nn0.eRQMLCrL4xEb58ap8RKTOyJx8pusfbr8Ut037GpYXfk";
 	const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-	
-	const list = document.getElementById("research-list");
-	const search = document.getElementById("search");
-	let dataCache = [];
-	const filters = {
-	  text: "",
-	  year: null,
-	  sdg: null,
-	  keyword: null
-	};
+
+const list = document.getElementById("research-list");
+const search = document.getElementById("search");
+
+/* MOBILE SEARCH */
+const searchMobile = document.getElementById("search-mobile");
+
+if(searchMobile){
+  searchMobile.oninput = () => {
+    filters.text = searchMobile.value.toLowerCase();
+    search.value = searchMobile.value; // keep desktop synced
+    applyFilters();
+  };
+}
+/* ADD IT HERE */
+const openFilter = document.getElementById("open-filter");
+const closeFilter = document.getElementById("close-filter");
+const filterPanel = document.getElementById("filter-panel");
+
+openFilter.addEventListener("click", () => {
+  filterPanel.classList.toggle("active");
+});
+
+closeFilter.addEventListener("click", () => {
+  filterPanel.classList.remove("active");
+});
+
+
+/* rest of your code continues */
+let dataCache = [];
+const filters = {
+  text: "",
+  year: null,
+  sdg: null,
+  keyword: null
+};
+
 	const clearBtn = document.getElementById("clear-filters");
 clearBtn.addEventListener("click", () => {
   // Reset filters
@@ -392,6 +672,43 @@ clearBtn.addEventListener("click", () => {
   applyFilters();
 });
 
+/* ---------- HELPER: JUSTIFIED TEXT ---------- */
+function drawJustifiedText(doc, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(" ");
+  let line = "";
+  let lines = [];
+
+  words.forEach(word => {
+    const testLine = line + word + " ";
+    const testWidth = doc.getTextWidth(testLine);
+    if (testWidth > maxWidth && line !== "") {
+      lines.push(line.trim());
+      line = word + " ";
+    } else {
+      line = testLine;
+    }
+  });
+
+  if (line) lines.push(line.trim());
+
+  lines.forEach(line => {
+    const wordsInLine = line.split(" ");
+    if (wordsInLine.length === 1) {
+      doc.text(line, x, y);
+    } else {
+      let lineWidth = doc.getTextWidth(line);
+      let gap = (maxWidth - lineWidth) / (wordsInLine.length - 1);
+      let cursorX = x;
+      wordsInLine.forEach((w, i) => {
+        doc.text(w, cursorX, y);
+        if (i < wordsInLine.length - 1) cursorX += doc.getTextWidth(w + " ") + gap;
+      });
+    }
+    y += lineHeight;
+  });
+
+  return y; // return new Y position after drawing
+}
 
 	/* ---------- HELPERS ---------- */
 	const toArray = v =>
@@ -421,31 +738,41 @@ clearBtn.addEventListener("click", () => {
 	const firstAuthor = a =>
 	  Array.isArray(a) && a.length ? a[0] + (a.length>1 ? " et al." : "") : a || "";
 	function applyFilters() {
-	  const filtered = dataCache.filter(r => {
-		const matchText =
-		  !filters.text ||
-		  r.title?.toLowerCase().includes(filters.text) ||
-		  toArray(r.authors).join(" ").toLowerCase().includes(filters.text) ||
-		  toArray(r.advisers).join(" ").toLowerCase().includes(filters.text) ||
-		  (r.keywords||[]).some(k => k.toLowerCase().includes(filters.text));
 
-		const matchYear =
-  !filters.year || getYear(r.research_date) == filters.year;
+  const filtered = dataCache.filter(r => {
 
-		 const matchSDG =
-  !filters.sdg ||
-  toArray(r.sdg).some(s =>
-    s.trim().toLowerCase() === filters.sdg.toLowerCase()
-  );
+    const matchText =
+      !filters.text ||
+      r.title?.toLowerCase().includes(filters.text) ||
+      toArray(r.authors).join(" ").toLowerCase().includes(filters.text) ||
+      toArray(r.advisers).join(" ").toLowerCase().includes(filters.text) ||
+      (r.keywords||[]).some(k => k.toLowerCase().includes(filters.text));
 
-		const matchKeyword =
-	  !filters.keyword || (r.keywords||[]).some(k => k.toLowerCase().includes(filters.keyword.toLowerCase()));
+    const matchYear =
+      !filters.year || getYear(r.research_date) == filters.year;
 
-		return matchText && matchYear && matchSDG && matchKeyword;
-	  });
+    const matchSDG =
+      !filters.sdg ||
+      toArray(r.sdg).some(s =>
+        s.trim().toLowerCase() === filters.sdg.toLowerCase()
+      );
 
-	  render(filtered);
-	}
+    const matchKeyword =
+      !filters.keyword ||
+      (r.keywords||[]).some(k =>
+        k.toLowerCase().includes(filters.keyword.toLowerCase())
+      );
+
+    return matchText && matchYear && matchSDG && matchKeyword;
+  });
+
+  render(filtered);
+
+  /* ---------- DYNAMIC FILTER UPDATE ---------- */
+  renderYears(filtered);
+  renderSDGs(filtered);
+  renderKeywords(filtered);
+}
 
 	/* ---------- LOAD ---------- */
 	async function load() {
@@ -623,42 +950,39 @@ document.querySelectorAll(".download-pdf").forEach((btn, i) => {
         y += lines.length * lineSpacing + 5;
       }
 
-      /* ---------- KEYWORDS ---------- */
-      if (r.keywords?.length) {
-        doc.setFont("helvetica", "bold");
-        doc.text("Keywords:", labelX, y);
+     /* ---------- KEYWORDS ---------- */
+if (r.keywords?.length) {
+  doc.setFont("helvetica", "bold");
+  doc.text("Keywords:", labelX, y);
 
-        doc.setFont("helvetica", "normal");
-        const lines = doc.splitTextToSize((r.keywords || []).join(", "), contentWidth - 35);
-        doc.text(lines, valueX, y);
-        y += lines.length * lineSpacing + 5;
-      }
+  doc.setFont("helvetica", "normal");
+  const keywordText = (r.keywords || []).join(", ");
+  const lines = doc.splitTextToSize(keywordText, contentWidth - (valueX - marginLeft));
 
-      /* ---------- EXECUTIVE SUMMARY ---------- */
-      if (r.abstract) {
+  lines.forEach(line => {
+    if (y > pageHeight - 15) {
+      doc.addPage();
+      addHeader();
+      y = headerHeight + 15;
+    }
+    doc.text(line, valueX, y);
+    y += lineSpacing;
+  });
+  y += 5; // extra space after keywords
+}
+      /* ---------- EXECUTIVE SUMMARY (JUSTIFIED) ---------- */
+if (r.abstract) {
 
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("EXECUTIVE SUMMARY", marginLeft, y);
-        y += 10;
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("EXECUTIVE SUMMARY", marginLeft, y);
+    y += 10;
 
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
 
-        const lines = doc.splitTextToSize(r.abstract, contentWidth);
-
-        lines.forEach(line => {
-
-          if (y > pageHeight - 15) {
-            doc.addPage();
-            addHeader();
-            y = headerHeight + 15;
-          }
-
-          doc.text(line, marginLeft, y);
-          y += 7;
-        });
-      }
+    y = drawJustifiedText(doc, r.abstract, marginLeft, y, contentWidth, 7);
+}
 
       doc.save(`${r.title || "research"}.pdf`);
 
@@ -677,38 +1001,39 @@ document.querySelectorAll(".download-pdf").forEach((btn, i) => {
 
 	/* ---------- FILTERS ---------- */
 	function renderYears(data){
+
   const years = [
     ...new Set(
       data.map(d => getYear(d.research_date)).filter(Boolean)
     )
-  ].sort((a,b) => b - a); // newest first
+  ].sort((a,b) => b-a);
 
   const container = document.getElementById("year-buttons");
   container.innerHTML = "";
 
   years.forEach(year => {
+
     const btn = document.createElement("button");
     btn.textContent = year;
+
+    if(filters.year == year){
+      btn.classList.add("active-filter");
+    }
 
     btn.addEventListener("click", () => {
 
       filters.year = filters.year === year ? null : year;
-
-      document.querySelectorAll("#year-buttons button")
-        .forEach(b => b.classList.remove("active-filter"));
-
-      if(filters.year === year){
-        btn.classList.add("active-filter");
-      }
-
       applyFilters();
+
     });
 
     container.appendChild(btn);
+
   });
 }
 
 function renderSDGs(data) {
+
   const sdgMap = {};
 
   data.forEach(d => {
@@ -722,73 +1047,71 @@ function renderSDGs(data) {
   container.innerHTML = "";
 
   Object.keys(sdgMap)
-    .sort((a, b) => {
+    .sort((a,b)=>{
       const numA = parseInt(a.match(/\d+/)?.[0]) || 0;
       const numB = parseInt(b.match(/\d+/)?.[0]) || 0;
-      return numA - numB; // ensures 1 → 17 order
+      return numA-numB;
     })
-    .forEach((sdg) => {
+    .forEach(sdg => {
 
       const btn = document.createElement("button");
       btn.textContent = sdg;
 
+      if(filters.sdg === sdg){
+        btn.classList.add("active-filter");
+      }
+
       btn.addEventListener("click", () => {
 
         filters.sdg = filters.sdg === sdg ? null : sdg;
-
-        document.querySelectorAll("#sdg-buttons button")
-          .forEach(b => b.classList.remove("active-filter"));
-
-        if (filters.sdg === sdg) {
-          btn.classList.add("active-filter");
-        }
-
         applyFilters();
+
       });
 
       container.appendChild(btn);
+
     });
 }
 
 	function renderKeywords(data){
-	  const m = {};
-	  data.forEach(d => {
-		toArray(d.keywords).forEach(k => {
-		  m[k] = (m[k] || 0) + 1;
-		});
-	  });
 
-	  const container = document.getElementById("keyword-buttons");
-	  container.innerHTML = "";
+  const m = {};
 
-	  Object.entries(m)
-		.sort((a,b) => b[1]-a[1]) // most used keywords first
-		.slice(0,10)
-		.forEach(([k]) => {
-		  const btn = document.createElement("button");
-		  btn.textContent = k;
-		  btn.addEventListener("click", () => {
-  // toggle keyword filter
-  filters.keyword = filters.keyword === k ? null : k;
+  data.forEach(d => {
+    toArray(d.keywords).forEach(k => {
+      m[k] = (m[k] || 0) + 1;
+    });
+  });
 
-  // update active styles
-  document.querySelectorAll("#keyword-buttons button")
-    .forEach(b => b.classList.remove("active-filter"));
+  const container = document.getElementById("keyword-buttons");
+  container.innerHTML = "";
 
-  if (filters.keyword === k) {
-    btn.classList.add("active-filter");
-  }
+  Object.entries(m)
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,10)
+    .forEach(([k]) => {
 
-  applyFilters();
-});
+      const btn = document.createElement("button");
+      btn.textContent = k;
 
-		  container.appendChild(btn);
-		});
-	}
+      if(filters.keyword === k){
+        btn.classList.add("active-filter");
+      }
+
+      btn.addEventListener("click", () => {
+
+        filters.keyword = filters.keyword === k ? null : k;
+        applyFilters();
+
+      });
+
+      container.appendChild(btn);
+
+    });
+}
 	});
 	</script>
 </html>
-
 
 
 
