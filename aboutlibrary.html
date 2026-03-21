@@ -88,47 +88,69 @@
       left: 0;
       bottom: -4px;
       width: 0;
-      height: 2px;
-      background: var(--gold);
+      height: 2.5px;
+  border-radius: 2px;      background: var(--gold);
       transition: 0.25s ease;
     }
 
     .nav-menu a:hover::after,
     .nav-menu a.active::after { width: 100%; }
 
-    .dropdown { position: relative; }
-
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: calc(100% + 12px);
-      left: 0;
-      min-width: 220px;
-      background: var(--white);
-      border-radius: 16px;
-      padding: 0.45rem;
-      list-style: none;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(15,47,107,0.08);
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: 0.7rem 1rem !important;
+      border-radius: 999px;
+      box-shadow: var(--shadow-soft);
     }
 
-    .dropdown:hover .dropdown-menu { display: block; }
+    .nav-cta::after { display: none; }
 
-    .dropdown-menu a {
-      display: block;
-      color: var(--navy);
-      padding: 0.9rem 1rem;
-      border-radius: 12px;
-      font-size: 0.96rem;
-    }
+    /* DROPDOWN MENU */
+.dropdown{
+  position:relative;
+}
 
-    .dropdown-menu a:hover {
-      background: #eff6ff;
-      color: var(--royal);
-    }
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  background:white;
+  min-width:200px;
+  list-style:none;
+  padding:8px 0;
+  border-radius:6px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.15);
+  z-index:1000;
+}
 
-    .dropdown-menu a::after { display: none; }
+.dropdown-menu li{
+  width:100%;
+}
 
+.dropdown-menu a{
+  display:block;
+  padding:10px 16px;
+  color:#1e3a8a;
+  text-decoration:none;
+  font-size:0.95rem;
+}
+
+.dropdown-menu a:hover{
+  background:#f3f4f6;
+  color:#fbbf24;
+}
+
+/* show dropdown on hover (desktop) */
+.dropdown:hover .dropdown-menu{
+  display:block;
+}
+
+/* remove underline animation inside dropdown */
+.dropdown-menu a::after{
+  display:none;
+}
     /* HERO */
     .hero-section {
       position: relative;
@@ -537,7 +559,7 @@
         <ul class="nav-menu" id="nav-menu">
           <li><a href="index.html">Home</a></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle active">About</a>
+            <a href="#" class="dropdown-toggle">About</a>
             <ul class="dropdown-menu">
               <li><a href="abouturs.html">About URS</a></li>
               <li><a href="aboutlibrary.html">About Library</a></li>
