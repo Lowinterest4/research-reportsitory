@@ -833,15 +833,28 @@ function setButtonState(button,state){
 async function loadUser(userId=null){
   const { data:{ session } } = await supabaseClient.auth.getSession();
   const user = userId || (session && session.user && session.user.id);
+
   if(user){
-    const { data: profile } = await supabaseClient.from('profiles').select('*').eq('user_id', user).single();
+    const { data: profile } = await supabaseClient
+      .from('profiles')
+      .select('*')
+      .eq('user_id', user)
+      .single();
+
+    // ✅ ROLE CHECK (IMPORTANT PART)
+    if(!profile || (profile.role !== "user" && profile.role !== "admin")){
+      window.location.href = "index.html"; // silent redirect
+      return;
+    }
+
+    // If allowed
     userInfo.textContent = profile?.display_name || "Unknown";
     logoutBtn.style.display="block";
     authModal.style.display="none";
-  }else{
-    userInfo.textContent="Not logged in";
-    logoutBtn.style.display="none";
-    authModal.style.display="flex";
+
+  } else {
+    // Not logged in → redirect instantly
+    window.location.href = "index.html";
   }
 }
 
@@ -1403,5 +1416,4 @@ function renderSDGs(data) {
 	});
 	</script>
 </html>
-
 
